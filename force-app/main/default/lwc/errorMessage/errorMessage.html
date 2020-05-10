@@ -1,0 +1,10 @@
+<template>
+    <template if:true={_errors}>
+        <div if:true={genericErrorMessage} class="slds-text-color_error">{genericErrorMessage}</div>
+        <div if:true={_errors} class="slds-text-color_error">
+            <template for:each={_errors} for:item="err">
+                <div key={err.code}><span if:true={err.field}>{err.field}: </span>{err.message} {err.additionalErrorMessage}</div>
+            </template>
+        </div>
+    </template>
+</template>

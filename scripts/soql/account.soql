@@ -1,0 +1,21 @@
+/**
+ * @File Name          : account.soql
+ * @Description        : 
+ * @Author             : ChangeMeIn@UserSettingsUnder.SFDoc
+ * @Group              : 
+ * @Last Modified By   : ChangeMeIn@UserSettingsUnder.SFDoc
+ * @Last Modified On   : 5/9/2020, 10:07:17 PM
+ * @Modification Log   : 
+ * Ver       Date            Author      		    Modification
+ * 1.0    5/9/2020   ChangeMeIn@UserSettingsUnder.SFDoc     Initial Version
+**/
+// Use .soql files to store SOQL queries.
+// You can execute queries in VS Code by selecting the
+//     query text and running the command:
+//     SFDX: Execute SOQL Query with Currently Selected Text
+
+SELECT Id, Name FROM Account;
+
+SELECT Id, Outcome, ApexClassId, MethodName, Message, StackTrace, AsyncApexJobId, QueueItemId, ApexLogId FROM ApexTestResult
+SELECT Id, ApexTestClassId, TestMethodName, FlowVersionId, NumElementsCovered, NumElementsNotCovered
+FROM FlowTestCoverage

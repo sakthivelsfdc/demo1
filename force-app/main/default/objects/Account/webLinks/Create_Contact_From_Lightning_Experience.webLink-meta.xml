@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Create_Contact_From_Lightning_Experience</fullName>
+    <availability>online</availability>
+    <displayType>button</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <linkType>url</linkType>
+    <masterLabel>Create Contact From Lightning Experience</masterLabel>
+    <openType>replace</openType>
+    <protected>false</protected>
+    <url>/lightning/o/Contact/new?recordtypeId=0122v000001SmZ2AAK&amp;defaultFieldValues=
+LastName={!URLENCODE(Account.Name)},
+Phone={!Account.Phone},
+Languages__c=English</url>
+</WebLink>

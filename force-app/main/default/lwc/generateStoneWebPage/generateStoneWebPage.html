@@ -1,0 +1,170 @@
+<template>
+    <lightning-card title="Generate Stone Web Page">
+        
+        <template if:true={displayConfirmMessage}>
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+                        <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                        </svg>
+                        <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Pushing to website will overwrite the current web page for this stone and any customisations you have made to it.?</h2>
+                    </header>
+                    <footer class="slds-modal__footer">
+                        <lightning-button variant="brand" label="Confirm" title="Confirm" name="Confirm" value="Save" onclick={handlePushingToWebsite}></lightning-button>&nbsp;
+                        <lightning-button variant="neutral" label="Cancel" title="Cancel" name="Cancel" value="Cancel" onclick={handleCancel}></lightning-button>   
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+        <template if:false={loaded}>
+            <lightning-layout class="slds-m-top_medium slds-m-bottom_small">
+                <lightning-spinner alternative-text="Loading"></lightning-spinner>
+            </lightning-layout>
+        </template>
+
+
+        <template if:true={documentListFirstScreen}>
+            <template if:true={documentList}>
+                <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                    <thead>
+                        <tr class="slds-text-title_caps">
+                            <th scope="col">
+                                <div title="Key">File Preview</div>
+                            </th>
+                            <th scope="col">
+                                <div title="Key">File Name</div>
+                            </th>
+                            <th scope="col">
+                                <div title="Value">Category</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={documentList} for:item="keyValue">
+                            <tr key={keyValue.Id}><td colspan="3" key={keyValue.Id}>
+                            
+                                <lightning-layout key={keyValue.Id}>
+                                    <lightning-layout-item size="4">
+                                        <img src={keyValue.imageURL} width="250px"/>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="4">
+                                        <b>{keyValue.Title}</b><br>
+                                        <lightning-formatted-date-time value={keyValue.CreatedDate} year="numeric" month="numeric" day="numeric" hour="2-digit"
+                                        minute="2-digit" time-zone-name="short" hour12="true"></lightning-formatted-date-time> - {keyValue.FileSize} - {keyValue.FileType}
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="4">
+                                        <template if:true={CategoryPicklistValues.data}>
+                                            <lightning-combobox name={keyValue.Id}
+                                                                label="Category"
+                                                                value={keyValue.Category}
+                                                                placeholder="-Select-"
+                                                                options={CategoryPicklistValues.data.values}
+                                                                onchange={updateDocumentCategory}>
+                                            </lightning-combobox>
+                                        </template>
+                                    </lightning-layout-item>
+                                </lightning-layout>
+                            </td></tr>
+                        </template>
+                            <tr>
+                                <th colspan="2">&nbsp;</th>
+                                <th align="right">
+                                    <div class="slds-clearfix">
+                                        <div class="slds-float_right">
+                                            <lightning-button label="Next" onclick={handleSecondPage}></lightning-button>
+                                        </div>
+                                    </div>
+                                </th>
+                            </tr>
+                    </tbody>
+                </table>
+            </template>
+        </template>
+
+
+        <template if:true={documentListSecondScreen}>
+            <template if:true={documentSecondList}>
+                <table class="slds-table slds-table_bordered slds-table_cell-buffer" key={documentSecondList}>
+                    <tr><td>
+                        <lightning-layout>
+                            <lightning-layout-item size="6">
+                                <lightning-textarea name="Description" label="Description" ></lightning-textarea>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </td></tr>
+                    <tr><td colspan="2">
+                <template for:each={documentSecondList} for:item='group'>    
+                    <table class="slds-table slds-table_bordered slds-table_cell-buffer" key={group}>
+                        <thead>
+                            <tr class="slds-text-title_caps">
+                                <th scope="col">
+                                    <div title="Key" style="width: 35%;">{group.category}</div>
+                                </th>
+                                <th scope="col">
+                                    <div title="Key" style="width: 65%;">&nbsp;</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={group.categoryResult} for:item="keyValue" for:index="idx">
+                                
+                                <tr draggable="true" key={keyValue.Id} data-id={keyValue.Id} ondragstart={startDrag} 
+                                ondragover={allowDrop} 
+                                ondrop={dropItem}
+                                ondragleave={dragLeave}
+                                ondragend={dragEnd}
+                                ontouchstart={touchStart} 			
+                                ontouchover={touchMove} 
+                                ontouchmove={touchMove}
+                                ontouchend={touchEnd}
+                                ontouchcancel={touchCancel} class="c-draggable" data-index={idx}
+                                data-category={group.category}>
+                                    <td colspan="2" key={keyValue.Id} data-index={idx}>
+                                        <div key={keyValue.Id} data-id={keyValue.Id}  data-index={idx}>
+                                        <lightning-layout key={keyValue.Id} data-index={idx}>
+                                            <lightning-layout-item size="4" data-index={idx}>
+                                                <img src={keyValue.imageURL} width="250px" data-index={idx}/>
+                                            </lightning-layout-item>
+                                            <lightning-layout-item size="8" data-index={idx}>
+                                                <b data-index={idx}>{keyValue.Title}</b><br>
+                                                <lightning-formatted-date-time value={keyValue.CreatedDate} year="numeric" month="numeric" day="numeric" hour="2-digit"
+                                                minute="2-digit" time-zone-name="short" hour12="true" data-index={idx}></lightning-formatted-date-time> - {keyValue.FileSize} - {keyValue.FileType} <br>
+                                            </lightning-layout-item>
+                                        </lightning-layout>
+                                        </div>
+                                    </td>
+                                </tr> 
+                            </template>
+                        </tbody>
+                    </table>
+                </template>
+                </td></tr>
+                        
+                <tr>
+                    <td align="left">
+                        <div class="slds-clearfix">
+                            <div class="slds-float_left">
+                                <lightning-button label="Back" onclick={handleBackPage}></lightning-button>
+                            </div>
+                        </div>
+                    </td>
+                    <td align="right">
+                        <div class="slds-clearfix">
+                            <div class="slds-float_right">
+                                <lightning-button label="Push to Website" onclick={handlePushWebsite}></lightning-button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </table>
+            </template>
+        </template>
+
+        
+    </lightning-card>
+</template>

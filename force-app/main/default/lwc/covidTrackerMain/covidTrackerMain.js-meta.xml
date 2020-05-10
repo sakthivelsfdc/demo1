@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>48.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Covid19 Tacker</masterLabel>
+    <targets>
+        <target>lightning__AppPage</target>
+        <target>lightning__RecordPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+        <target>lightning__Tab</target>
+    </targets>
+    <!--
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <property name="strTitle" type="String" label="Title" description="Enter the title"/>
+            <property name="strIconName" type="String" label="Icon Name" description="Enter an Icon Name like standard:account"/>
+            <property name="showNewButton" type="Boolean" label="Show New Button?" description="show New Button?"/>
+            <property name="parentObject" type="String" label="Parent Object" datasource="Account,Contact" description="Which Record Page are we on? Contact or Account?"/>
+            <objects>
+                <object>Case</object>
+                <object>Contact</object>
+                <object>Account</object>
+                <object>CustomObject__c</object>
+            </objects>
+        </targetConfig>
+    </targetConfigs>
+
+    Reference: https://developer.salesforce.com/docs/component-library/documentation/en/lwc/lwc.reference_configuration_tags
+    --></LightningComponentBundle>

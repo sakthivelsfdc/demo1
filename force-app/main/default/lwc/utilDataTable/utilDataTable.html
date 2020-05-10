@@ -1,0 +1,12 @@
+<template>
+    <template if:false={noRecord}>
+        <lightning-datatable
+                key-field="id"
+                data={data}
+                columns={columns}>
+        </lightning-datatable>
+    </template>
+    <template if:true={noRecord}>
+        No records found
+    </template>
+</template>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Position_is_require_when_Lead_Source_Web</fullName>
+    <active>true</active>
+    <errorConditionFormula>ISPICKVAL(LeadSource, &quot;Web&quot;) &amp;&amp; ISBLANK( Position__c )</errorConditionFormula>
+    <errorDisplayField>Position__c</errorDisplayField>
+    <errorMessage>Position is required when Lead Source is Web</errorMessage>
+</ValidationRule>

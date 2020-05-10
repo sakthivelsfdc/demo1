@@ -1,0 +1,52 @@
+<template>
+        
+    <template if:true={showSpinner}>
+        <lightning-layout class="slds-m-top_medium slds-m-bottom_small">
+            <lightning-spinner alternative-text="Loading"></lightning-spinner>
+        </lightning-layout>
+    </template>
+
+    <template if:true={showError}> <!--show if any error-->
+        <lightning-layout class="slds-m-top_medium slds-m-bottom_small">
+            <lightning-layout-item size="12" padding="horizontal-small">
+
+                <div if:true={errors} class="slds-text-color_error">
+                    <template for:each={errors} for:item="err">
+                        <div key={err.code}><span if:true={err.field}>{err.field}: </span>{err.message} {err.additionalErrorMessage}</div>
+                    </template>
+                </div>
+
+            </lightning-layout-item>
+        </lightning-layout>
+
+
+        <lightning-layout class="slds-m-top_medium slds-m-bottom_small">
+            <lightning-layout-item size="12" padding="horizontal-small">
+                <c-error-message errors={errors} generic-error-message="Error from covid 19 Summary data retrival:"></c-error-message>
+            </lightning-layout-item> 
+        </lightning-layout>
+
+    </template>
+    <template if:false={showSpinner}>
+        <lightning-card title="Covid19 - Live Tracker using LWC and covid19api.com API" icon-name="standard:announcement">
+            <lightning-layout-item size="12"  class="slds-float_left">
+                    <lightning-layout multiple-rows="true" class="slds-card_boundary">
+                        
+                            <lightning-datatable
+                                key-field="id"
+                                data={data}
+                                columns={columns}
+                                sorted-by={sortBy}
+                                sorted-direction={sortDirection}
+                                onsort={handleSortdata}
+                                onrowselection={getSelectedQuoteName}
+                                onpolicyquoterow={getSelectedPolicyQuote}
+                                hide-checkbox-column=true>
+                            </lightning-datatable>
+                            
+                    </lightning-layout>
+            </lightning-layout-item>
+        </lightning-card> 
+    </template>
+
+</template>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prevent_Owner_value_changes</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+ISCHANGED(OwnerId),
+OR(
+$Profile.Name = &quot;Standard User&quot;,
+$Profile.Name = &quot;Solution Manager&quot;,
+$Profile.Name = &quot;Contract Manager&quot;,
+$Profile.Name = &quot;System Administrator&quot;)
+)</errorConditionFormula>
+    <errorDisplayField>OwnerId</errorDisplayField>
+    <errorMessage>You don&#39;t have the permission to change the Account Owner value</errorMessage>
+</ValidationRule>

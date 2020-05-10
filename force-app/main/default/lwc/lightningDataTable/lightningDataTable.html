@@ -1,0 +1,13 @@
+<template>
+    <lightning-card title = "Search Accounts" icon-name = "standard:account">  
+        Show All <lightning-input type="checkbox" class="inputCheckbox" name="inputCheckbox" id="inputCheckboxId" value="Show All" onclick={showAll}> </lightning-input>
+        <div class = "slds-m-around_medium">
+            <lightning-input type="search" onchange={findAccountResult} class = "slds-m-bottom_small" label = "Search"> </lightning-input>
+            <lightning-datatable key-field="Id" data={accountList} columns={columnList} hide-checkbox-column="true" show-row-number-column="true">
+            </lightning-datatable>
+            <template if:true= {noRecordsFound}>
+                --No Account Records Found------
+            </template>
+        </div>
+    </lightning-card>
+</template>
