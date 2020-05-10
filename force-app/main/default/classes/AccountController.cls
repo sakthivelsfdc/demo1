@@ -17,7 +17,8 @@ public with sharing class AccountController {
     //Demo 
     @AuraEnabled
     public static List<Account> findAll() {
-    return [SELECT id, name, website
+    //test
+        return [SELECT id, name, website
             FROM Account
             Where Website != NULL LIMIT 10];
     } 
